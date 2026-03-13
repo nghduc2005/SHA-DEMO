@@ -1,5 +1,5 @@
 import customtkinter as ctk
-
+import hashlib
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
@@ -33,6 +33,25 @@ class CryptoApp(ctk.CTk):
         entry.pack(side="right")
         return entry
 
+    def handleClick(self):
+        user_input = self.m1_input.get()
+        if not user_input:
+            return
+        user_encoded = user_input.encode("utf-8")
+
+        hash_sha1 = hashlib.sha1(user_encoded).hexdigest()
+        hash_sha256 = hashlib.sha256(user_encoded).hexdigest()
+        hash_sha3 = hashlib.sha3_256(user_encoded).hexdigest()
+
+        self.m1_sha1.delete(0, "end")     
+        self.m1_sha1.insert(0, hash_sha1)
+
+        self.m1_sha2.delete(0, "end")     
+        self.m1_sha2.insert(0, hash_sha256)
+
+        self.m1_sha3.delete(0, "end")     
+        self.m1_sha3.insert(0, hash_sha3)
+
     # --- MODULE 1 ---
     def draw_module1(self):
         # Input
@@ -48,6 +67,8 @@ class CryptoApp(ctk.CTk):
         self.m1_sha2 = self.create_row(self.tab1, "Mã SHA-256:")
         self.m1_sha3 = self.create_row(self.tab1, "Mã SHA-3:")
 
+        self.m1_btn.configure(command=self.handleClick)
+        
     # --- MODULE 2 ---
     def draw_module2(self):
         ctk.CTkLabel(self.tab2, text="Mã Hash cần thám:").pack(pady=5)
