@@ -147,7 +147,7 @@ class CryptoApp(ctk.CTk):
         if not pwd: return
         hashed_str = generate_bcrypt(pwd)
         self.m3_bcrypt_res.delete(0, 'end'); self.m3_bcrypt_res.insert(0, hashed_str)
-        self.m3_verify_hash.delete(0, 'end'); self.m3_verify_hash.insert(0, hashed_str)
+        # self.m3_verify_hash.delete(0, 'end'); self.m3_verify_hash.insert(0, hashed_str)
 
     def handle_bcrypt_verify(self):
         saved_hash = self.m3_verify_hash.get()
